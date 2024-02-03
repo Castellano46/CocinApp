@@ -23,16 +23,21 @@ final class RecipesListViewModel: ObservableObject {
     func fetchData() {
         networkModel.getRecipes { result in
             switch result {
-            case .success(let recipes):
-                self.recipes = recipes
+            case .success(let fetchedRecipes):
+                DispatchQueue.main.async {
+                    self.recipes = fetchedRecipes
+                }
             case .failure(let error):
                 print("Failed to fetch recipes. Error: \(error.localizedDescription)")
             }
         }
     }
+
+    func filteredRecipes(searchText: String) -> [RecipesResult] {
+        guard !searchText.isEmpty else {
+            return recipes
+        }
+
+        return recipes.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+    }
 }
-
-
-
-
-

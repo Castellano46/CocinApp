@@ -9,17 +9,53 @@ import SwiftUI
 
 struct RecipesListView: View {
     @ObservedObject var viewModel: RecipesListViewModel
-    
+
+    @State private var searchText: String = ""
+
     var body: some View {
         NavigationView {
-            List(viewModel.recipes, id: \.id) { recipe in
-                Text(recipe.title)
+            VStack {
+                // Buscador de recetas
+                SearchBar(searchText: $searchText)
+
+                List(viewModel.filteredRecipes(searchText: searchText), id: \.id) { recipe in
+                    HStack {
+                        AsyncImage(url: URL(string: recipe.image)) { phase in
+                            switch phase {
+                            case .empty:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                            @unknown default:
+                                fatalError()
+                            }
+                        }
+                        Text(recipe.title)
+                    }
+                }
             }
-            .navigationTitle("Recipes")
+            /*.navigationBarTitle("Recipes", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                viewModel.fetchData()
+            }, label: {
+                Image(systemName: "arrow.clockwise.circle")
+                    .foregroundColor(.blue)
+            }))*/
+            .navigationBarHidden(true)
         }
     }
 }
-
 
 struct RecipesListView_Previews: PreviewProvider {
     static var previews: some View {
