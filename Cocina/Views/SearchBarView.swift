@@ -29,10 +29,9 @@ struct SearchBar: View {
     }
 }
 
-struct SearchBar_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBar(searchText: .constant(""))
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
+#Preview {
+    SearchBar(searchText: .constant(""))
+        .previewLayout(.sizeThatFits)
+        .padding()
 }
+
