@@ -26,6 +26,7 @@ final class NetworkModel: ObservableObject {
 
     func login(username: String, password: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
         let obtainedApiKey = "2ff61fcbcaed4e05b271c47746b86b8f"
+        //let obtainedApiKey = "d75de7fd321846f3b0f3e5fd1d42ba86"
 
         UserSettings.shared.apiKey = obtainedApiKey
         completion(.success("Login successful"))
