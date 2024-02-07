@@ -45,13 +45,13 @@ struct RecipesListView: View {
                     }
                 }
             }
-            /*.navigationBarTitle("Recipes", displayMode: .inline)
+            .navigationBarTitle("Recipes", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 viewModel.fetchData()
             }, label: {
                 Image(systemName: "arrow.clockwise.circle")
                     .foregroundColor(.blue)
-            }))*/
+            }))
             .navigationBarHidden(true)
         }
     }
