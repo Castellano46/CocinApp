@@ -9,15 +9,15 @@ import SwiftUI
 
 struct RecipesListView: View {
     @ObservedObject var viewModel: RecipesListViewModel
-
+    
     @State private var searchText: String = ""
-
+    
     var body: some View {
         NavigationView {
             VStack {
                 // Buscador de recetas
                 SearchBar(searchText: $searchText)
-
+                
                 List(viewModel.filteredRecipes(searchText: searchText), id: \.id) { recipe in
                     HStack {
                         AsyncImage(url: URL(string: recipe.image)) { phase in
@@ -45,6 +45,12 @@ struct RecipesListView: View {
                     }
                 }
             }
+            .background(
+                Image("Marco3") 
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+            )
             .navigationBarTitle("Recipes", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 viewModel.fetchData()
